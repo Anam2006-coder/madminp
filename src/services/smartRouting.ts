@@ -1,0 +1,75 @@
+import { departments } from '../data/mockData'
+import { Complaint } from '../types'
+
+export function determineDepartment(description: string): string {
+  const lowerDesc = description.toLowerCase()
+  
+  for (const dept of departments) {
+    for (const keyword of dept.keywords) {
+      if (lowerDesc.includes(keyword.toLowerCase())) {
+        return dept.name
+      }
+    }
+  }
+  
+  // Default to Roads if no keywords match
+  return 'Roads'
+}
+
+export function determinePriority(description: string, department: string): 'High' | 'Medium' | 'Low' {
+  const lowerDesc = description.toLowerCase()
+  
+  // High priority keywords
+  const highPriorityKeywords = [
+    'emergency', 'urgent', 'dangerous', 'accident', 'fire', 'flood', 'outbreak',
+    'broken wire', 'gas leak', 'major', 'critical', 'immediate', 'unsafe'
+  ]
+  
+  // Medium priority keywords  
+  const mediumPriorityKeywords = [
+    'outage', 'leakage', 'pothole', 'repair', 'maintenance', 'broken', 'damaged'
+  ]
+  
+  for (const keyword of highPriorityKeywords) {
+    if (lowerDesc.includes(keyword)) {
+      return 'High'
+    }
+  }
+  
+  for (const keyword of mediumPriorityKeywords) {
+    if (lowerDesc.includes(keyword)) {
+      return 'Medium'
+    }
+  }
+  
+  // Special department-based priority rules
+  if (department === 'Health' || department === 'Garbage') {
+    return 'Medium' // Health and sanitation are generally medium priority
+  }
+  
+  return 'Low'
+}
+
+export function processNewComplaint(
+  citizen_name: string,
+  description: string,
+  location: string,
+  photo?: string
+): Omit<Complaint, 'id'> {
+  const department = determineDepartment(description)
+  const priority = determinePriority(description, department)
+  const now = new Date()
+  
+  return {
+    citizen_name,
+    department,
+    description,
+    photo,
+    location,
+    priority,
+    status: 'New',
+    created_at: now,
+    updated_at: now
+  }
+}
+
