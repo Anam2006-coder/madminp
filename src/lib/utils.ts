@@ -48,3 +48,4 @@ export function calculateSLAStatus(createdAt: Date, department: string): {
   return { status: 'within', hoursRemaining }
 }
 
+

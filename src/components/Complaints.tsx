@@ -60,9 +60,9 @@ export function Complaints({ complaints, onComplaintUpdate }: ComplaintsProps) {
 
     // Photo filter
     if (photoFilter === 'with_photo') {
-      filtered = filtered.filter(c => c.photo)
+      filtered = filtered.filter(c => c.photos && c.photos.length > 0)
     } else if (photoFilter === 'without_photo') {
-      filtered = filtered.filter(c => !c.photo)
+      filtered = filtered.filter(c => !c.photos || c.photos.length === 0)
     }
 
     // Sorting

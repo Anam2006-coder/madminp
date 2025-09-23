@@ -29,13 +29,29 @@ export function Login() {
     }
   }
 
+  // Auto 1-click login via URL params (?u=&p=)
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const u = params.get('u')
+    const p = params.get('p')
+    if (u && p) {
+      handleQuickLogin(u, p)
+    }
+  }, [])
+
+  const handleQuickLogin = async (u: string, p: string) => {
+    setUsername(u)
+    setPassword(p)
+    await handleSubmit({ preventDefault: () => {} } as any)
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-login py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <Shield className="mx-auto h-8 w-8 text-primary" />
           <h2 className="mt-4 text-xl font-bold text-gray-900">
-            Admin Dashboard
+            Municipality Admin
           </h2>
           <p className="mt-1 text-xs text-gray-600">
             Sign in to manage complaints and analytics
@@ -98,14 +114,15 @@ export function Login() {
             </form>
 
             <div className="mt-4 border-t border-gray-200 pt-4">
-              <div className="text-xs text-gray-600">
-                <p className="font-medium mb-1">Demo Credentials:</p>
-                <div className="space-y-0.5">
-                  <p><strong>Main Admin:</strong> admin / password</p>
-                  <p><strong>Water Admin:</strong> water_admin / password</p>
-                  <p><strong>Roads Admin:</strong> roads_admin / password</p>
-                  <p><strong>Electricity Admin:</strong> electricity_admin / password</p>
+              <div className="text-xs text-gray-600 space-y-2">
+                <p className="font-medium">Try demo accounts:</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button variant="outline" size="sm" onClick={() => handleQuickLogin('admin','password')}>Main Admin</Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickLogin('water_admin','password')}>Water Admin</Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickLogin('roads_admin','password')}>Roads Admin</Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickLogin('electricity_admin','password')}>Electricity Admin</Button>
                 </div>
+                <p className="text-[11px] text-gray-700">Or open: <a className="underline" href="?u=admin&p=password">1-click URL</a></p>
               </div>
             </div>
           </CardContent>

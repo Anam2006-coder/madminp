@@ -11,7 +11,7 @@ export interface Complaint {
   citizen_name: string
   department: string
   description: string
-  photo?: string
+  photos?: string[]
   location: string
   priority: 'High' | 'Medium' | 'Low'
   status: 'New' | 'Seen' | 'Assigned' | 'In Progress' | 'Completed' | 'Closed'
@@ -45,4 +45,5 @@ export interface AuthContextType {
   logout: () => void
   isAuthenticated: boolean
 }
+
 

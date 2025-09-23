@@ -1,6 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Page background images */
+.bg-login {
+	background-image: url('https://www.george.gov.za/wp-content/uploads/2022/12/Aerial-George-scaled.jpg');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+.bg-dashboard {
+	background-image: url('https://static.vecteezy.com/system/resources/previews/020/824/612/large_2x/road-and-greenery-nature-of-himalayan-range-village-6-photo.JPG');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+.bg-complaints {
+	background-image: url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?w=1600&auto=format&fit=crop&q=80');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+.bg-analytics {
+	background-image: url('https://images.unsplash.com/photo-1551281044-8d8d0fdce18b?w=1600&auto=format&fit=crop&q=80');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
  
 @layer base {
   :root {
@@ -71,24 +100,24 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground text-sm;
+    @apply bg-background text-foreground text-xs;
   }
   h1 {
-    @apply text-2xl;
-  }
-  h2 {
     @apply text-xl;
   }
-  h3 {
+  h2 {
     @apply text-lg;
   }
-  h4 {
+  h3 {
     @apply text-base;
   }
-  h5 {
+  h4 {
     @apply text-sm;
   }
-  h6 {
+  h5 {
     @apply text-xs;
+  }
+  h6 {
+    @apply text-[10px];
   }
 }

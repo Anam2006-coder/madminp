@@ -28,18 +28,18 @@ export const generateMockComplaints = (): Complaint[] => {
   const statuses: Complaint['status'][] = ['New', 'Seen', 'Assigned', 'In Progress', 'Completed', 'Closed']
 
   const complaintTemplates = [
-    { dept: 'Water', desc: 'Water leakage in the main pipe causing flooding in the street', photo: 'https://tse1.mm.bing.net/th/id/OIP.4pu8VDeGjHD2kB81GPDdYAHaER?pid=Api&P=0&h=220' },
-    { dept: 'Water', desc: 'No water supply for the past 3 days in our area', photo: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=300&fit=crop' },
-    { dept: 'Roads', desc: 'Large pothole on the main road causing traffic issues', photo: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop' },
-    { dept: 'Roads', desc: 'Broken streetlight making the area unsafe at night', photo: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop' },
-    { dept: 'Electricity', desc: 'Power outage in the residential area for over 12 hours', photo: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop' },
-    { dept: 'Electricity', desc: 'Damaged electrical wire hanging dangerously low', photo: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop' },
-    { dept: 'Garbage', desc: 'Garbage not collected for a week, creating unhygienic conditions', photo: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop' },
-    { dept: 'Garbage', desc: 'Overflowing dustbin attracting stray animals', photo: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop' },
-    { dept: 'Health', desc: 'Mosquito breeding in stagnant water near health center', photo: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop' },
-    { dept: 'Health', desc: 'Lack of medical staff at the community health center', photo: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop' },
-    { dept: 'Education', desc: 'Broken desks and chairs in the primary school', photo: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop' },
-    { dept: 'Education', desc: 'No proper drinking water facility in the school', photo: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop' }
+    { dept: 'Water', desc: 'Water leakage in the main pipe causing flooding in the street', photos: ['https://tse1.mm.bing.net/th/id/OIP.4pu8VDeGjHD2kB81GPDdYAHaER?pid=Api&P=0&h=220','https://tse1.mm.bing.net/th/id/OIP.4pu8VDeGjHD2kB81GPDdYAHaER?pid=Api&P=0&h=220'] },
+    { dept: 'Water', desc: 'No water supply for the past 3 days in our area', photos: [''] },
+    { dept: 'Roads', desc: 'Large pothole on the main road causing traffic issues', photos: ['https://tse1.mm.bing.net/th/id/OIP.TD1ITUwLWLg56LNRPa-y3AHaE8?pid=Api&P=0&h=220','https://images.unsplash.com/photo-1505843513577-22bb7d21e455?w=800&fit=crop'] },
+    { dept: 'Roads', desc: 'Broken streetlight making the area unsafe at night', photos: ['https://tse4.mm.bing.net/th/id/OIP.PcQjkFQcD5jvFZIm6DR2gwHaE1?pid=Api&P=0&h=220'] },
+    { dept: 'Electricity', desc: 'Power outage in the residential area for over 12 hours', photos: ['https://c8.alamy.com/comp/BYXWCF/damaged-electrical-wires-and-transformers-after-the-earthquake-port-BYXWCF.jpg'] },
+    { dept: 'Electricity', desc: 'Damaged electrical wire hanging dangerously low', photos: ['https://c8.alamy.com/comp/BYXWCF/damaged-electrical-wires-and-transformers-after-the-earthquake-port-BYXWCF.jpg'] },
+    { dept: 'Garbage', desc: 'Garbage not collected for a week, creating unhygienic conditions', photos: ['https://tse4.mm.bing.net/th/id/OIP.ObMAwl7vRH4ISVbojmseNQHaFZ?pid=Api&P=0&h=220'] },
+    { dept: 'Garbage', desc: 'Overflowing dustbin attracting stray animals', photos: ['https://tse2.mm.bing.net/th/id/OIP.jZ5z-vnqUqxlBrkKBHenTQHaEl?pid=Api&P=0&h=220'] },
+    { dept: 'Health', desc: 'Mosquito breeding in stagnant water near health center', photos: ['https://thumbs.dreamstime.com/z/sewer-water-overflowing-onto-sidewalk-storm-drain-sewer-water-overflowing-onto-sidewalk-storm-drain-273984822.jpg'] },
+    { dept: 'Health', desc: 'Lack of medical staff at the community health center', photos: ['https://tse4.mm.bing.net/th/id/OIP.Aho5XOGX76UtQ0BtYHvShwHaE8?pid=Api&P=0&h=220'] },
+    { dept: 'Education', desc: 'Broken desks and chairs in the primary school', photos: ['https://tse4.mm.bing.net/th/id/OIP.Aho5XOGX76UtQ0BtYHvShwHaE8?pid=Api&P=0&h=220'] },
+    { dept: 'Education', desc: 'No proper drinking water facility in the school', photos: ['https://tse1.mm.bing.net/th/id/OIP.3Ar-PRXoHfcZQCdOl279fwHaD2?pid=Api&P=0&h=220'] }
   ]
 
   for (let i = 1; i <= 50; i++) {
@@ -52,7 +52,7 @@ export const generateMockComplaints = (): Complaint[] => {
       citizen_name: citizenNames[Math.floor(Math.random() * citizenNames.length)],
       department: template.dept,
       description: template.desc,
-      photo: Math.random() > 0.3 ? template.photo : undefined, // 70% chance of having a photo
+      photos: Math.random() > 0.3 ? (Array.isArray(template.photos) ? template.photos : [template.photos]).slice(0, Math.random() > 0.5 ? 1 : 2) : undefined,
       location: locations[Math.floor(Math.random() * locations.length)],
       priority: priorities[Math.floor(Math.random() * priorities.length)],
       status: statuses[Math.floor(Math.random() * statuses.length)],

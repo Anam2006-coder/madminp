@@ -18,7 +18,9 @@ import {
   XCircle,
   FileText,
   Image as ImageIcon,
-  X
+  X,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react'
 import { formatDate, formatTimeAgo, calculateSLAStatus } from '../lib/utils'
 
@@ -33,6 +35,7 @@ export function ComplaintCard({ complaint, onStatusUpdate }: ComplaintCardProps)
   const [newStatus, setNewStatus] = useState<Complaint['status']>(complaint.status)
   const [workerNotes, setWorkerNotes] = useState(complaint.worker_notes || '')
   const [showImagePreview, setShowImagePreview] = useState(false)
+  const [activeImageIndex, setActiveImageIndex] = useState(0)
   
   const slaStatus = calculateSLAStatus(complaint.created_at, complaint.department)
   
@@ -149,20 +152,32 @@ export function ComplaintCard({ complaint, onStatusUpdate }: ComplaintCardProps)
           <p className="text-xs text-gray-900">{complaint.description}</p>
         </div>
 
-        {/* Photo/Image Section */}
-        {complaint.photo && (
+        {/* Photos Section */}
+        {(complaint.photos && complaint.photos.length > 0) && (
           <div>
-            <p className="text-xs font-medium text-gray-700 mb-2">Attached Photo</p>
-            <div className="relative">
-              <div 
-                className="w-full h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
-                onClick={() => setShowImagePreview(true)}
-              >
-                <div className="text-center">
-                  <ImageIcon className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                  <p className="text-xs text-gray-600">Click to view image</p>
-                </div>
-              </div>
+            <p className="text-xs font-medium text-gray-700 mb-2">Attached Photos</p>
+            <div className="grid grid-cols-3 gap-2">
+              {(complaint.photos ?? []).slice(0, 6).map((src, idx) => (
+                <button
+                  key={idx}
+                  className="relative w-full aspect-square overflow-hidden rounded-md border bg-gray-100"
+                  onClick={() => { setActiveImageIndex(idx); setShowImagePreview(true) }}
+                >
+                  {/* 1:1 square thumbnail */}
+                  <img
+                    src={src}
+                    alt={`Complaint photo ${idx + 1}`}
+                    className="h-full w-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement
+                      target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2U1ZTVlNSIvPjwvc3ZnPg=='
+                    }}
+                  />
+                  {idx === 5 && (complaint.photos?.length ?? 0) > 6 && (
+                    <div className="absolute inset-0 bg-black/50 text-white flex items-center justify-center text-xs font-medium">+{(complaint.photos?.length ?? 0) - 5}</div>
+                  )}
+                </button>
+              ))}
             </div>
           </div>
         )}
@@ -251,11 +266,11 @@ export function ComplaintCard({ complaint, onStatusUpdate }: ComplaintCardProps)
       </CardContent>
 
       {/* Image Preview Modal */}
-      {showImagePreview && complaint.photo && (
+      {showImagePreview && complaint.photos && complaint.photos.length > 0 && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] overflow-hidden">
             <div className="flex items-center justify-between p-4 border-b">
-              <h3 className="text-lg font-semibold">Complaint Photo - #{complaint.id}</h3>
+              <h3 className="text-lg font-semibold">Complaint Photos - #{complaint.id}</h3>
               <Button
                 variant="ghost"
                 size="sm"
@@ -268,14 +283,43 @@ export function ComplaintCard({ complaint, onStatusUpdate }: ComplaintCardProps)
             <div className="p-4">
               <div className="relative">
                 <img
-                  src={complaint.photo}
-                  alt={`Complaint photo for ${complaint.citizen_name}`}
+                  src={(complaint.photos ?? [])[activeImageIndex]}
+                  alt={`Complaint photo ${activeImageIndex + 1} for ${complaint.citizen_name}`}
                   className="max-w-full max-h-[70vh] object-contain mx-auto rounded-lg"
                   onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2YjcyODAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
+                    const target = e.target as HTMLImageElement
+                    target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM2YjcyODAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+'
                   }}
                 />
+                {complaint.photos.length > 1 && (
+                  <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2">
+                    <button
+                      className="h-8 w-8 rounded-full bg-black/50 text-white flex items-center justify-center"
+                      onClick={() => setActiveImageIndex((activeImageIndex - 1 + complaint.photos!.length) % complaint.photos!.length)}
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      className="h-8 w-8 rounded-full bg-black/50 text-white flex items-center justify-center"
+                      onClick={() => setActiveImageIndex((activeImageIndex + 1) % complaint.photos!.length)}
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
+                {complaint.photos.length > 1 && (
+                  <div className="mt-3 flex gap-2 justify-center">
+                    {complaint.photos.map((src, i) => (
+                      <button
+                        key={i}
+                        className={`h-10 w-10 rounded border overflow-hidden ${i === activeImageIndex ? 'ring-2 ring-primary' : ''}`}
+                        onClick={() => setActiveImageIndex(i)}
+                      >
+                        <img src={src} alt={`thumb ${i+1}`} className="h-full w-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               <div className="mt-4 text-sm text-gray-600">
                 <p><strong>Complaint ID:</strong> #{complaint.id}</p>

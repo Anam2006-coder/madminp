@@ -222,3 +222,4 @@ Contributors will be recognized in:
 - Project documentation
 
 Thank you for contributing to the Admin Dashboard project! 🎉
+

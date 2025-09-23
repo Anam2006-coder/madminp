@@ -1,6 +1,28 @@
 import { departments } from '../data/mockData'
 import { Complaint } from '../types'
 
+function normalizeText(text: string): string {
+	return text
+		.toLowerCase()
+		.replace(/[^a-z0-9\s]/g, '')
+		.replace(/\s+/g, ' ')
+		.trim()
+}
+
+export function isDuplicateComplaint(
+	complaints: Complaint[],
+	description: string,
+	location: string
+): boolean {
+	const normDesc = normalizeText(description)
+	const normLoc = normalizeText(location)
+	return complaints.some(c => {
+		const cDesc = normalizeText(c.description)
+		const cLoc = normalizeText(c.location)
+		return cDesc === normDesc && cLoc === normLoc
+	})
+}
+
 export function determineDepartment(description: string): string {
   const lowerDesc = description.toLowerCase()
   
@@ -54,7 +76,7 @@ export function processNewComplaint(
   citizen_name: string,
   description: string,
   location: string,
-  photo?: string
+  photos?: string[]
 ): Omit<Complaint, 'id'> {
   const department = determineDepartment(description)
   const priority = determinePriority(description, department)
@@ -64,7 +86,7 @@ export function processNewComplaint(
     citizen_name,
     department,
     description,
-    photo,
+    photos,
     location,
     priority,
     status: 'New',
@@ -72,4 +94,5 @@ export function processNewComplaint(
     updated_at: now
   }
 }
+
 

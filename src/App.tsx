@@ -56,11 +56,13 @@ function AppContent() {
     }
   }
 
+  const bgClass = activeTab === 'dashboard' ? 'bg-dashboard' : activeTab === 'complaints' ? 'bg-complaints' : activeTab === 'analytics' ? 'bg-analytics' : 'bg-dashboard'
+
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className={`flex h-screen ${bgClass}`}>
       <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
       <main className="flex-1 overflow-auto">
-        <div className="p-6">
+        <div className="p-6 bg-white/80 backdrop-blur-sm min-h-full">
           {renderContent()}
         </div>
       </main>
